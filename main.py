@@ -5,7 +5,6 @@ from kubernetes import client, config
 
 print("Benvenuti!, verifichiamo la sicurezza!")
 print("Mi dici il nome del tuo namespace ?")
-namespace_name = input("Inserisci_il_nome")
 
 print("Grazie, verifico la tue configurazioni!")
 
