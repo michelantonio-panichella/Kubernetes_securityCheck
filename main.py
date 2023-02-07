@@ -1,6 +1,7 @@
 import os
 import kubernetes
 from kubernetes import client, config
+from kubernetes.client.rest import ApiException
 
 
 print("Benvenuti!, verifichiamo la sicurezza!")
@@ -9,9 +10,7 @@ print("Mi dici il nome del tuo namespace ?")
 print("Grazie, verifico la tue configurazioni!")
 
 
-# Nome del namespace da controllare
-from kubernetes.client.rest import ApiException
-
+# Nome del namespace da controllar
 namespace = 'test-namespace'
 
 def namespaceTest(namespace):
@@ -81,3 +80,9 @@ def namespaceTest(namespace):
         print("Errore nella verifica della configurazione della crittografia delle comunicazioni", e)
 
 
+print("Benvenuti!, verifichiamo la sicurezza!")
+print("Mi dici il nome del tuo namespace ?")
+
+print("Grazie, verifico la tue configurazioni!")
+
+namespaceTest(namespace)
