@@ -5,7 +5,7 @@ metadata:
   labels:
     app: securitycheck
 spec:
-  replicas: 1
+  replicas: 1k
   selector:
     matchLabels:
       app: securitycheck
@@ -17,5 +17,8 @@ spec:
       containers:
       - name: securitycheck
         image: docker.io/panichella/tesi_mik:v1
+        resources:
+          cpu: 1
+          memory: 512Mi
         ports:
         - containerPort: 80
