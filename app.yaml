@@ -18,7 +18,7 @@ spec:
       - name: securitycheck
         image: docker.io/panichella/tesi_mik:v1
         resources:
-          cpu: 1
+          cpu: 2
           memory: 512Mi
         ports:
         - containerPort: 80
