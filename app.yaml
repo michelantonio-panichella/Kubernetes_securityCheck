@@ -5,7 +5,7 @@ metadata:
   labels:
     app: securitycheck
 spec:
-  replicas: 1k
+  replicas: 1
   selector:
     matchLabels:
       app: securitycheck
