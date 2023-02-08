@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kubernetes_securityCheck_deployment
+  name: kubernetessecurityCheckdeployment
   labels:
-    app: kubernetes_securityCheck
+    app: kubernetessecurityCheck
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: kubernetes_securityCheck
+      app: kubernetessecurityCheck
   template:
     metadata:
       labels:
         app: kubernetes_securityCheck
     spec:
       containers:
-      - name: kubernetes_securityCheck
+      - name: kubernetessecurityCheck
         image: docker.io/panichella/tesi_mik:v1
         ports:
         - containerPort: 80
