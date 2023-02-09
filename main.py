@@ -5,15 +5,6 @@ from kubernetes import client, config
 from kubernetes.client.rest import ApiException
 
 
-print("Benvenuti!, verifichiamo la sicurezza!")
-print("Mi dici il nome del tuo namespace ?")
-
-print("Grazie, verifico la tue configurazioni!")
-
-
-# Nome del namespace da controllar
-namespace = 'test-namespace'
-
 def namespaceTest(namespace):
     # Carica la confi gurazione di Kubernetes
     config.load_kube_config()
