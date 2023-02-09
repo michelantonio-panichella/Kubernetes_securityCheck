@@ -1,5 +1,6 @@
 import os
 import kubernetes
+from google.auth.transport import requests
 from kubernetes import client, config
 from kubernetes.client.rest import ApiException
 
@@ -149,6 +150,53 @@ def namespaceTest(namespace):
             print("Username:", user.metadata.name)
     except ApiException as e:
         print("Errore durante la richiesta API: %s\n" % e)
+
+
+
+def kube_generaltest():
+
+
+    # Load the kubernetes configuration
+    config.load_kube_config()
+
+    # Create a CoreV1Api client instance
+    v1 = client.CoreV1Api()
+
+    # Retrieve a list of all pods in the cluster
+    pods = v1.list_pod_for_all_namespaces(watch=False)
+
+    # Iterate through each pod
+    for pod in pods.items:
+        # Check if the pod is running with privileged mode
+        if pod.spec.host_pid:
+            print("Pod %s is running with privileged mode" % pod.metadata.name)
+
+        # Check if the pod has memory and CPU limits set
+        if not pod.spec.containers[0].resources.limits:
+            print("Pod %s does not have memory and CPU limits set" % pod.metadata.name)
+        else:
+            print("Pod %s has memory and CPU limits set" % pod.metadata.name)
+
+
+    # ---------------- Testa se Kubernetes è aggiornato
+    # Get the current version of the cluster
+    version_info = v1.get_code().to_dict()
+    cluster_version = version_info["gitVersion"].split("+")[0]
+
+    # Get the latest version of Kubernetes from the upstream repository
+    response = requests.get("https://dl.k8s.io/release/stable.txt")
+    if response.status_code == 200:
+        latest_version = response.text.strip()
+    else:
+        print("Unable to retrieve latest Kubernetes version")
+
+    # Compare the versions to determine if the cluster is up-to-date
+    if cluster_version == latest_version:
+        print("Kubernetes cluster is up-to-date")
+    else:
+        print("Kubernetes cluster is out-of-date. Current version: %s, Latest version: %s" % (
+        cluster_version, latest_version))
+
 
 
 
