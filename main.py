@@ -197,7 +197,6 @@ print("Mi dici il nome del tuo namespace ?")
 
 print("Grazie, verifico la tue configurazioni!")
 
-namespaceTest(namespace)
 
 """
 Per utilizzare questo codice in Kubernetes, è necessario creare una configurazione di Pod 
