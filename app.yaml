@@ -5,7 +5,7 @@ metadata:
   labels:
     app: securitycheck
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: securitycheck
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: securitycheck
-        image: docker.io/panichella/tesi_mik:v2s
+        image: docker.io/panichella/tesi_mik:v2
         resources:
           requests:
             memory: "64Mi"
