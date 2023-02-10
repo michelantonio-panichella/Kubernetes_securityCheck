@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: python-app-container
-        image: python-app:latest
+        image: docker.io/panichella/tesi_mik:v2
         ports:
         - containerPort: 5000
         env:
