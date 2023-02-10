@@ -194,7 +194,6 @@ def kube_generaltest():
 
 print("Benvenuti!, verifichiamo la sicurezza!")
 print("Mi dici il nome del tuo namespace ?")
-
 print("Grazie, verifico la tue configurazioni!")
 
 
