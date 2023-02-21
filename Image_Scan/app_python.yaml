@@ -1,24 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: imagescan-deployment
+  name: securitycheck-deployment
+  labels:
+    app: securitycheck
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: python-app
+      app: securitycheck
   template:
     metadata:
       labels:
-        app: python-app
+        app: securitycheck
     spec:
       containers:
-      - name: imagescan-container
-        image: docker.io/panichella/tesi_mik:v2_imm
-        env:
-        - name: PYTHON_APP_SETTINGS
-          value: production
-      volumes:
-      - name: python-app-volume
-        configMap:
-          name: python-app-config
+      - name: securitycheck
+        image: docker.io/panichella/tesi_mik:v2
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
