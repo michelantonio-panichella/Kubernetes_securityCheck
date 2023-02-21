@@ -18,9 +18,6 @@ spec:
         env:
         - name: PYTHON_APP_SETTINGS
           value: production
-        volumeMounts:
-        - name: imagescan-volume
-          mountPath: /app
       volumes:
       - name: python-app-volume
         configMap:
