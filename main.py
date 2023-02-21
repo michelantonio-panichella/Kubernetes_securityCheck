@@ -13,6 +13,7 @@ def namespaceTest(namespace):
     core_v1 = client.CoreV1Api()
     rbac_v1 = client.RbacAuthorizationV1Api()
     v1_ext = client.ExtensionsV1beta1Api()
+    namespace_name = "default"
 
     # Controlla se il namespace esiste
     try:
@@ -21,26 +22,16 @@ def namespaceTest(namespace):
     except ApiException as e:
         print(f'Error: {e}')
 
-
-    # Controlla se l'utente ha i privilegi per accedere al namespace
+    # Effettua una chiamata all'API Kubernetes per ottenere le informazioni sul namespace se l'utente possiede i privilegi vengono restituite le informazioni alteimenti viene stampato errore durante la chiamata all'API Kubernetes
     try:
-        # Recupera il nome del servizio account dell'utente corrente
-        service_account_name = os.environ['SERVICE_ACCOUNT_NAME']
-        # Recupera il nome del ruolo che assegna i privilegi di lettura al namespace
-        role_name = 'namespace-reader'
-        # Recupera la configurazione del ruolo
-        role_config = rbac_v1.read_namespaced_role(name=role_name, namespace=namespace)
-        # Controlla se il servizio account è presente tra i soggetti del ruolovisu
-        for subject in role_config.subjects:
-            if subject.name == service_account_name:
-                print(
-                    f'Success: Il servizio account {service_account_name} ha i privilegi di lettura sul namespace {namespace}.')
-                break
-        else:
-            print(
-                f'Error: Il servizio account {service_account_name} non ha i privilegi di lettura sul namespace {namespace}.')
+        api_response = core_v1.read_namespace(name=namespace_name)
+        print(f"L'utente ha i privilegi per accedere al namespace {namespace_name}.")
     except ApiException as e:
-        print(f'Error: {e}')
+        if e.status == 403:
+            print(f"L'utente non ha i privilegi per accedere al namespace {namespace_name}.")
+        else:
+            print("Errore durante la chiamata all'API Kubernetes: %s\n" % e)
+
 
 
     # Verifica della configurazione delle regole di sicurezza del network

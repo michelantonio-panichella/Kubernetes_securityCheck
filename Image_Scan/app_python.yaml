@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: imagescan-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: python-app
+  template:
+    metadata:
+      labels:
+        app: python-app
+    spec:
+      containers:
+      - name: imagescan-container
+        image: docker.io/panichella/tesi_mik:v2_imm
+        env:
+        - name: PYTHON_APP_SETTINGS
+          value: production
+        volumeMounts:
+        - name: imagescan-volume
+          mountPath: /app
+      volumes:
+      - name: python-app-volume
+        configMap:
+          name: python-app-config
