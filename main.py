@@ -9,6 +9,7 @@ def namespaceTest(namespace):
     # Carica la confi gurazione di Kubernetes
     config.load_kube_config()
 
+
     # Istanzia le API del client
     core_v1 = client.CoreV1Api()
     rbac_v1 = client.RbacAuthorizationV1Api()
@@ -17,12 +18,15 @@ def namespaceTest(namespace):
 
     # Controlla se il namespace esiste
     try:
-        api_response = core_v1.read_namespace(name=namespace)
-        print(f'Success: Namespace {namespace} esiste.')
+        api_response = core_v1.read_namespace(name=namespace_name)
+        print(f'Success: Namespace {namespace_name} esiste.')
     except ApiException as e:
-        print(f'Error: {e}')
+        if e.status == 404:
+            print(f"Il namespace {namespace_name} non esiste.")
+        else:
+            print("Errore durante la ricerca del namespace:", e)
 
-    # Effettua una chiamata all'API Kubernetes per ottenere le informazioni sul namespace se l'utente possiede i privilegi vengono restituite le informazioni alteimenti viene stampato errore durante la chiamata all'API Kubernetes
+    # Effettua una chiamata all'API Kubernetes per ottenere le informazioni sul namespace se l'utente possiede i privilegi vengono restituite le informazioni altrimenti viene stampato errore durante la chiamata all'API Kubernetes
     try:
         api_response = core_v1.read_namespace(name=namespace_name)
         print(f"L'utente ha i privilegi per accedere al namespace {namespace_name}.")
@@ -99,7 +103,7 @@ def namespaceTest(namespace):
                     print("Configurazione di sicurezza corretta per il namespace: ", namespace.metadata.name)
         except ApiException as e:
             print("Errore durante la verifica della configurazione di sicurezza per il namespace: ", namespace.metadata.name)
-        
+
 
 
     # Verifica dei privilegi per ogni namespace
@@ -116,7 +120,7 @@ def namespaceTest(namespace):
                         print("Il contenitore non ha privilegi elevati: ", container.name, "nel Pod: ", pod.metadata.name)
                 else:
                     print("Il contenitore non ha privilegi elevati: ", container.name, "nel Pod: ", pod.metadata.name)
-                
+
 
 
     # Creare un oggetto di tipo Configuration
@@ -181,11 +185,23 @@ def kube_generaltest():
 
 
 
+print("Benvenuto in Check8s, cosa vuoi verificare ?")
+print('Qui puoi verificare la sicurezza di', end='\n 1 ')
+print('Namespaces', end='\n 2 ')
+print('Container/Image', end='\n 3 ')
+print('Endpoint esposti \n scegli! 1, 2 o 3 ?')
+input_utente = int(input('1, 2, 3?'))
+try:
+    if(input_utente == 1):
+        print('Benissimo, hai scelto di verificare un namespace')
+    elif(input_utente == 2):
+        print('Benissimo, hai scelto di verificare un \'immagine')
+    else:
+        if(input_utente == 3):
+            print('Benissimo, hai scelto di verificare un endpoint')
+except:
+    print('mi dispiace l'i)
 
-
-print("Benvenuti!, verifichiamo la sicurezza!")
-print("Mi dici il nome del tuo namespace ?")
-print("Grazie, verifico la tue configurazioni!")
 
 
 """

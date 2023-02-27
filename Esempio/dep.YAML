@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-python-deployment
+spec:
+  selector:
+    matchLabels:
+      app: hello-python
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: hello-python
+    spec:
+      containers:
+      - name: hello-python-container
+        image: pythonhello_image
+        command: ["python"]
+        args: ["hello.py"]

@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: securitycheck
-        image: docker.io/panichella/tesi_mik:v2
+        image: kubernetes_image_test
         resources:
           requests:
             memory: "64Mi"
